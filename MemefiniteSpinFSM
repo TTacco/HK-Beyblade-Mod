@@ -68,16 +68,12 @@ namespace MemefiniteSpin
 
         public void Attack(AttackDirection at)
         {
-            if (activatedAlready)
+           /* if (activatedAlready)
             {
                 nailArtFSM.SetState("Cyclone End");
                 activatedAlready = false;
             }
-            else if (!activatedAlready)
-            {
-                nailArtFSM.SetState("Flash");
-            }
-
+            */
         }
 
         public void OnCycloneSpin()
@@ -86,11 +82,11 @@ namespace MemefiniteSpin
             activatedAlready = true;
         }
 
-
         public void FixedUpdate()
         {
             if (!MemefiniteSpinMain.stateIsWaiting)
             {
+                nailArtFSM.SetState("Inactive");
                 if (activatedAlready)
                 {
                     activatedAlready = false;
