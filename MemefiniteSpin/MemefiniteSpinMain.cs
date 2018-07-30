@@ -34,5 +34,6 @@ namespace MemefiniteSpin
         {
             stateIsWaiting = HeroController.instance.transitionState.ToString().Contains("WAITING");
         }
+
     }
 }
