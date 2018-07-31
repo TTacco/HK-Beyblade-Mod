@@ -61,10 +61,18 @@ namespace MemefiniteSpin
                     everyFrame = false
                 }, 0);
 
-                nailArtFSM.InsertAction("Has Cyclone?", new CallMethod
+                nailArtFSM.InsertAction("Move Choice", new CallMethod
                 {
                     behaviour = GameManager.instance.GetComponent<MemefiniteSpinFSM>(),
-                    methodName = "OnHasCyclone",
+                    methodName = "MoveChoice",
+                    parameters = new FsmVar[0],
+                    everyFrame = false
+                }, 0);
+
+                nailArtFSM.InsertAction("Flash 2", new CallMethod
+                {
+                    behaviour = GameManager.instance.GetComponent<MemefiniteSpinFSM>(),
+                    methodName = "GSlashFlash",
                     parameters = new FsmVar[0],
                     everyFrame = false
                 }, 0);
@@ -80,6 +88,7 @@ namespace MemefiniteSpin
             if (activatedAlready)
             {
                 nailArtFSM.SetState("Cancel All");
+                activatedAlready = false;
             }
         }
 
@@ -89,30 +98,23 @@ namespace MemefiniteSpin
             activatedAlready = true;
         }
 
-        public void 
-
-        public void OnHasCyclone()
+        public void MoveChoice()
         {
-            Modding.Logger.Log("Has Cyclone has been reached");
+            Modding.Logger.Log("MoveChoice has been reached");
+        }
+
+        public void OnInactive()
+        {
+            Modding.Logger.Log("Inactive has been reached");
+        }
+
+        public void GSlashFlash()
+        {
+            nailArtFSM.SetState("Flash");
         }
 
         public void FixedUpdate()
         {
-           /* if (!MemefiniteSpinMain.stateIsWaiting)
-            {
-                nailArtFSM.SetState("Inactive");
-                if (activatedAlready)
-                {
-                    activatedAlready = false;
-                }
-            }
-            */
-        }
-
-
-        public void OnInactive()
-        {
-
         }
 
     }
