@@ -12,13 +12,6 @@ using System;
 namespace MemefiniteSpin
 {
 
-    //Comment Test
-    //More Test
-    //Wew Lad
-    //Test
-    //More comment test
-    //Multiple Comment Test Commit
-
     class MemefiniteSpinFSM : MonoBehaviour
     {
         PlayMakerFSM nailArtFSM;
@@ -67,6 +60,14 @@ namespace MemefiniteSpin
                     parameters = new FsmVar[0],
                     everyFrame = false
                 }, 0);
+
+                nailArtFSM.InsertAction("Has Cyclone?", new CallMethod
+                {
+                    behaviour = GameManager.instance.GetComponent<MemefiniteSpinFSM>(),
+                    methodName = "OnHasCyclone",
+                    parameters = new FsmVar[0],
+                    everyFrame = false
+                }, 0);
             }
             catch (Exception e)
             {
@@ -76,19 +77,10 @@ namespace MemefiniteSpin
 
         public void Attack(AttackDirection at)
         {
-           /* if (activatedAlready)
+            if (activatedAlready)
             {
-                nailArtFSM.SetState("Cyclone End");
-                activatedAlready = false;
+                nailArtFSM.SetState("Cancel All");
             }
-            */
-        }
-
-        //CommentTest
-        
-        public void test()
-        {
-
         }
 
         public void OnCycloneSpin()
@@ -97,9 +89,16 @@ namespace MemefiniteSpin
             activatedAlready = true;
         }
 
+        public void 
+
+        public void OnHasCyclone()
+        {
+            Modding.Logger.Log("Has Cyclone has been reached");
+        }
+
         public void FixedUpdate()
         {
-            if (!MemefiniteSpinMain.stateIsWaiting)
+           /* if (!MemefiniteSpinMain.stateIsWaiting)
             {
                 nailArtFSM.SetState("Inactive");
                 if (activatedAlready)
@@ -107,6 +106,7 @@ namespace MemefiniteSpin
                     activatedAlready = false;
                 }
             }
+            */
         }
 
 

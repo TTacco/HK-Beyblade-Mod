@@ -18,6 +18,7 @@ namespace MemefiniteSpin
             ModHooks.Instance.AfterSavegameLoadHook += SaveGame;
             ModHooks.Instance.NewGameHook += NewGame;
             ModHooks.Instance.HeroUpdateHook += GetState;
+            ModHooks.Instance.CharmUpdateHook += ChargeTimer;
         }
 
         public void SaveGame(SaveGameData sv)
@@ -35,6 +36,10 @@ namespace MemefiniteSpin
             stateIsWaiting = HeroController.instance.transitionState.ToString().Contains("WAITING");
         }
 
+        public void ChargeTimer(PlayerData data, HeroController controller)
+        {
+            HeroController.instance.NAIL_CHARGE_TIME_DEFAULT = .20f;
+        }
 
         //Multiple Comment Test Commit 
     }
