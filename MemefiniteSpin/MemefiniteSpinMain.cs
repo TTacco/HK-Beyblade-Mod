@@ -1,10 +1,5 @@
 ﻿using Modding;
 using System.Reflection;
-using GlobalEnums;
-using UnityEngine;
-using ModCommon;
-using HutongGames.PlayMaker;
-using HutongGames.PlayMaker.Actions;
 
 namespace MemefiniteSpin
 {
@@ -17,7 +12,6 @@ namespace MemefiniteSpin
         {
             ModHooks.Instance.AfterSavegameLoadHook += SaveGame;
             ModHooks.Instance.NewGameHook += NewGame;
-            ModHooks.Instance.HeroUpdateHook += GetState;
             ModHooks.Instance.CharmUpdateHook += ChargeTimer;
         }
 
@@ -31,16 +25,10 @@ namespace MemefiniteSpin
             GameManager.instance.gameObject.AddComponent<MemefiniteSpinFSM>();
         }
 
-        public void GetState()
-        {
-            stateIsWaiting = HeroController.instance.transitionState.ToString().Contains("WAITING");
-        }
-
         public void ChargeTimer(PlayerData data, HeroController controller)
         {
-            HeroController.instance.NAIL_CHARGE_TIME_DEFAULT = .20f;
+            HeroController.instance.NAIL_CHARGE_TIME_DEFAULT = .2f;
+            HeroController.instance.NAIL_CHARGE_TIME_CHARM = .2f;
         }
-
-        //Multiple Comment Test Commit 
     }
 }

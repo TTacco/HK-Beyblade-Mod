@@ -1,10 +1,8 @@
 ﻿using Modding;
 using UnityEngine;
-using UnityEngine.UI;
 using HutongGames.PlayMaker;
 using HutongGames.PlayMaker.Actions;
 using GlobalEnums;
-using Modding.Menu;
 using System.Collections;
 using ModCommon.Util;
 using System;
@@ -53,22 +51,6 @@ namespace MemefiniteSpin
                     everyFrame = false
                 }, 0);
 
-                nailArtFSM.InsertAction("Inactive", new CallMethod
-                {
-                    behaviour = GameManager.instance.GetComponent<MemefiniteSpinFSM>(),
-                    methodName = "OnInactive",
-                    parameters = new FsmVar[0],
-                    everyFrame = false
-                }, 0);
-
-                nailArtFSM.InsertAction("Move Choice", new CallMethod
-                {
-                    behaviour = GameManager.instance.GetComponent<MemefiniteSpinFSM>(),
-                    methodName = "MoveChoice",
-                    parameters = new FsmVar[0],
-                    everyFrame = false
-                }, 0);
-
                 nailArtFSM.InsertAction("Flash 2", new CallMethod
                 {
                     behaviour = GameManager.instance.GetComponent<MemefiniteSpinFSM>(),
@@ -98,23 +80,9 @@ namespace MemefiniteSpin
             activatedAlready = true;
         }
 
-        public void MoveChoice()
-        {
-            Modding.Logger.Log("MoveChoice has been reached");
-        }
-
-        public void OnInactive()
-        {
-            Modding.Logger.Log("Inactive has been reached");
-        }
-
         public void GSlashFlash()
         {
             nailArtFSM.SetState("Flash");
-        }
-
-        public void FixedUpdate()
-        {
         }
 
     }
