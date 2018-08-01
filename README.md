@@ -3,7 +3,8 @@ Dumb Hollow Knight mod that gives you an infinite Cyclone Spin while still being
 (Essentially you have a protective aura/halo/whatever around you all the time)
 
 Enable by either casting Cyclone or Great Slash normally (Hence Great Slash is disabled).
-Disable by attacking while the effect is active.
+
+Disable by casting either again.
 
 Notes:
 - Has no damage changes to nail arts whatsoever
