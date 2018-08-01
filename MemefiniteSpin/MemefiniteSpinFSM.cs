@@ -72,13 +72,6 @@ namespace MemefiniteSpin
                     everyFrame = false
                 }, 0);
 
-                nailArtFSM.InsertAction("Inactive", new CallMethod
-                {
-                    behaviour = GameManager.instance.GetComponent<MemefiniteSpinFSM>(),
-                    methodName = "Test",
-                    parameters = new FsmVar[0],
-                    everyFrame = false
-                }, 0);
             }
             catch (Exception e)
             {
@@ -106,13 +99,6 @@ namespace MemefiniteSpin
             nailArtFSM.SetState("Flash");
         }
 
-        public void Test()
-        {
-            Modding.Logger.Log("Inactive Reached");
-        }
-
-        //Gets called every frame
-
         public void RemoveCycloneKnockback(On.HealthManager.orig_TakeDamage orig, HealthManager self, HitInstance instance)
         {
             if (instance.Source.transform.parent.parent.gameObject.name == "Cyclone Slash")
@@ -125,6 +111,5 @@ namespace MemefiniteSpin
             }
             orig(self, instance);
         }
-
     }       
 }
