@@ -28,7 +28,6 @@ namespace MemefiniteSpin
         public void ChargeTimer(PlayerData data, HeroController controller)
         {
             HeroController.instance.NAIL_CHARGE_TIME_DEFAULT = .2f;
-            HeroController.instance.NAIL_CHARGE_TIME_CHARM = .2f;
-        }
+            HeroController.instance.NAIL_CHARGE_TIME_CHARM = .2f;        }
     }
 }

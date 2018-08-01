@@ -17,7 +17,6 @@ namespace MemefiniteSpin
 
         public void Start()
         {
-            ModHooks.Instance.AfterAttackHook += Attack;
             On.HealthManager.TakeDamage += (orig, self, instance) =>
             {
                 RemoveCycloneKnockback(orig, self, instance);
@@ -28,7 +27,6 @@ namespace MemefiniteSpin
 
         public void OnDestroy()
         {
-            ModHooks.Instance.AfterAttackHook -= Attack;
             On.HealthManager.TakeDamage -= (orig, self, instance) =>
             {
                 RemoveCycloneKnockback(orig, self, instance);
@@ -71,10 +69,18 @@ namespace MemefiniteSpin
                     parameters = new FsmVar[0],
                     everyFrame = false
                 }, 0);
-
-
                 //Test insert action
-                
+
+                nailArtFSM.InsertAction("Flash", new CallMethod
+                {
+                    behaviour = GameManager.instance.GetComponent<MemefiniteSpinFSM>(),
+                    methodName = "OnFlash",
+                    parameters = new FsmVar[0],
+                    everyFrame = false
+                }, 0);
+
+                //Test
+
                 nailArtFSM.InsertAction("Cancel All", new CallMethod
                 {
                     behaviour = GameManager.instance.GetComponent<MemefiniteSpinFSM>(),
@@ -97,15 +103,6 @@ namespace MemefiniteSpin
             }
         }
 
-        public void Attack(AttackDirection at)
-        {
-            if (activatedAlready)
-            {
-                nailArtFSM.SetState("Cancel All");
-                activatedAlready = false;
-            }
-        }
-
         public void OnCycloneSpin()
         {
             nailArtFSM.SetState("Cyc Send Msg");
@@ -115,6 +112,17 @@ namespace MemefiniteSpin
         public void GSlashFlash()
         {
             nailArtFSM.SetState("Flash");
+        }
+
+        //Test
+        public void OnFlash()
+        {
+            if (activatedAlready)
+            {
+                Modding.Logger.Log("Activated already and will cancel");
+                activatedAlready = false;
+                nailArtFSM.SetState("Cyclone End");
+            }
         }
 
         public void OnCancelAll()
