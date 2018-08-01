@@ -72,6 +72,16 @@ namespace MemefiniteSpin
                     everyFrame = false
                 }, 0);
 
+
+                //Test insert action
+                
+                nailArtFSM.InsertAction("Cancel All", new CallMethod
+                {
+                    behaviour = GameManager.instance.GetComponent<MemefiniteSpinFSM>(),
+                    methodName = "OnCancelAll",
+                    parameters = new FsmVar[0],
+                    everyFrame = false
+                }, 0);
             }
             catch (Exception e)
             {
@@ -97,6 +107,14 @@ namespace MemefiniteSpin
         public void GSlashFlash()
         {
             nailArtFSM.SetState("Flash");
+        }
+
+        public void OnCancelAll()
+        {
+            if (activatedAlready)
+            {
+                nailArtFSM.SetState("Activate Slash");
+            }
         }
 
         public void RemoveCycloneKnockback(On.HealthManager.orig_TakeDamage orig, HealthManager self, HitInstance instance)
