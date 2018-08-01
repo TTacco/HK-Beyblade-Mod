@@ -82,6 +82,14 @@ namespace MemefiniteSpin
                     parameters = new FsmVar[0],
                     everyFrame = false
                 }, 0);
+
+                nailArtFSM.InsertAction("Play Audio", new CallMethod
+                {
+                    behaviour = GameManager.instance.GetComponent<MemefiniteSpinFSM>(),
+                    methodName = "OnPlayAudio",
+                    parameters = new FsmVar[0],
+                    everyFrame = false
+                }, 0);
             }
             catch (Exception e)
             {
@@ -114,6 +122,14 @@ namespace MemefiniteSpin
             if (activatedAlready)
             {
                 nailArtFSM.SetState("Activate Slash");
+            }
+        }
+        
+        public void OnPlayAudio()
+        {
+            if (activatedAlready)
+            {
+                nailArtFSM.SetState("Cyclone Spin");
             }
         }
 
