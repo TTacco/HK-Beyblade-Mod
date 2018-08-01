@@ -18,20 +18,9 @@ namespace MemefiniteSpin
         public void Start()
         {
             ModHooks.Instance.AfterAttackHook += Attack;
-            ModHooks.Instance.HeroUpdateHook += UpdateTest;
-            ModHooks.Instance.SoulGainHook += SoulGainTest;
-            ModHooks.Instance.HitInstanceHook += HitInstanceTest;
             On.HealthManager.TakeDamage += (orig, self, instance) =>
             {
-                if (instance.Source.transform.parent.parent.gameObject.name == "Cyclone Slash")
-                {
-                    var recoil = self.GetAttr<Recoil>("recoil");
-                    self.SetAttr<Recoil>("recoil", null);
-                    orig(self, instance);
-                    self.SetAttr("recoil", recoil);
-                    return;
-                }
-                orig(self, instance);
+                RemoveCycloneKnockback(orig, self, instance);
             };
             activatedAlready = false;
             StartCoroutine(InitializeFSM());
@@ -40,20 +29,9 @@ namespace MemefiniteSpin
         public void OnDestroy()
         {
             ModHooks.Instance.AfterAttackHook -= Attack;
-            ModHooks.Instance.HeroUpdateHook -= UpdateTest;
-            ModHooks.Instance.SoulGainHook -= SoulGainTest;
-            ModHooks.Instance.HitInstanceHook -= HitInstanceTest;
             On.HealthManager.TakeDamage -= (orig, self, instance) =>
             {
-                if (instance.Source.transform.parent.parent.gameObject.name == "Cyclone Slash")
-                {
-                    var recoil = self.GetAttr<Recoil>("recoil");
-                    self.SetAttr<Recoil>("recoil", null);
-                    orig(self, instance);
-                    self.SetAttr("recoil", recoil);
-                    return;
-                }
-                orig(self, instance);
+                RemoveCycloneKnockback(orig, self, instance);
             };
         }
 
@@ -133,35 +111,20 @@ namespace MemefiniteSpin
             Modding.Logger.Log("Inactive Reached");
         }
 
-        public void UpdateTest()
-        {
-
-
-        }
-
-        public int SoulGainTest(int num)
-        {
-            Modding.Logger.Log("Gaining Soul");
-            return num;
-        }
-
-
         //Gets called every frame
-        public HitInstance HitInstanceTest(Fsm owner, HitInstance hit)
-        {
 
-            if (hit.Source.ToString().Contains("Hit") && hit.AttackType.ToString().Contains("Nail"))
+        public void RemoveCycloneKnockback(On.HealthManager.orig_TakeDamage orig, HealthManager self, HitInstance instance)
+        {
+            if (instance.Source.transform.parent.parent.gameObject.name == "Cyclone Slash")
             {
-
+                var recoil = self.GetAttr<Recoil>("recoil");
+                self.SetAttr<Recoil>("recoil", null);
+                orig(self, instance);
+                self.SetAttr("recoil", recoil);
+                return;
             }
-            return hit;
+            orig(self, instance);
         }
-
-        public void TakeDamageTest(HitInstance hit)
-        {
-            return;
-        }
-        //
 
     }       
 }
