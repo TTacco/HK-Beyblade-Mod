@@ -18,8 +18,43 @@ namespace MemefiniteSpin
         public void Start()
         {
             ModHooks.Instance.AfterAttackHook += Attack;
+            ModHooks.Instance.HeroUpdateHook += UpdateTest;
+            ModHooks.Instance.SoulGainHook += SoulGainTest;
+            ModHooks.Instance.HitInstanceHook += HitInstanceTest;
+            On.HealthManager.TakeDamage += (orig, self, instance) =>
+            {
+                if (instance.Source.transform.parent.parent.gameObject.name == "Cyclone Slash")
+                {
+                    var recoil = self.GetAttr<Recoil>("recoil");
+                    self.SetAttr<Recoil>("recoil", null);
+                    orig(self, instance);
+                    self.SetAttr("recoil", recoil);
+                    return;
+                }
+                orig(self, instance);
+            };
             activatedAlready = false;
             StartCoroutine(InitializeFSM());
+        }
+
+        public void OnDestroy()
+        {
+            ModHooks.Instance.AfterAttackHook -= Attack;
+            ModHooks.Instance.HeroUpdateHook -= UpdateTest;
+            ModHooks.Instance.SoulGainHook -= SoulGainTest;
+            ModHooks.Instance.HitInstanceHook -= HitInstanceTest;
+            On.HealthManager.TakeDamage -= (orig, self, instance) =>
+            {
+                if (instance.Source.transform.parent.parent.gameObject.name == "Cyclone Slash")
+                {
+                    var recoil = self.GetAttr<Recoil>("recoil");
+                    self.SetAttr<Recoil>("recoil", null);
+                    orig(self, instance);
+                    self.SetAttr("recoil", recoil);
+                    return;
+                }
+                orig(self, instance);
+            };
         }
 
         private IEnumerator InitializeFSM()
@@ -58,6 +93,14 @@ namespace MemefiniteSpin
                     parameters = new FsmVar[0],
                     everyFrame = false
                 }, 0);
+
+                nailArtFSM.InsertAction("Inactive", new CallMethod
+                {
+                    behaviour = GameManager.instance.GetComponent<MemefiniteSpinFSM>(),
+                    methodName = "Test",
+                    parameters = new FsmVar[0],
+                    everyFrame = false
+                }, 0);
             }
             catch (Exception e)
             {
@@ -85,5 +128,40 @@ namespace MemefiniteSpin
             nailArtFSM.SetState("Flash");
         }
 
-    }
+        public void Test()
+        {
+            Modding.Logger.Log("Inactive Reached");
+        }
+
+        public void UpdateTest()
+        {
+
+
+        }
+
+        public int SoulGainTest(int num)
+        {
+            Modding.Logger.Log("Gaining Soul");
+            return num;
+        }
+
+
+        //Gets called every frame
+        public HitInstance HitInstanceTest(Fsm owner, HitInstance hit)
+        {
+
+            if (hit.Source.ToString().Contains("Hit") && hit.AttackType.ToString().Contains("Nail"))
+            {
+
+            }
+            return hit;
+        }
+
+        public void TakeDamageTest(HitInstance hit)
+        {
+            return;
+        }
+        //
+
+    }       
 }
