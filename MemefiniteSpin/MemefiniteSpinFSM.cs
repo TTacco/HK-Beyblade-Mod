@@ -69,7 +69,6 @@ namespace MemefiniteSpin
                     parameters = new FsmVar[0],
                     everyFrame = false
                 }, 0);
-                //Test insert action
 
                 nailArtFSM.InsertAction("Flash", new CallMethod
                 {
@@ -78,8 +77,6 @@ namespace MemefiniteSpin
                     parameters = new FsmVar[0],
                     everyFrame = false
                 }, 0);
-
-                //Test
 
                 nailArtFSM.InsertAction("Cancel All", new CallMethod
                 {
@@ -114,7 +111,6 @@ namespace MemefiniteSpin
             nailArtFSM.SetState("Flash");
         }
 
-        //Test
         public void OnFlash()
         {
             if (activatedAlready)
